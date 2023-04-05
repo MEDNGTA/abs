@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Insert Stats</title>
+</head>
+<body>
+  <form id="insertForm">
+    <label for="ucity">City:</label>
+    <input type="text" id="ucity" name="ucity"><br>
+
+    <label for="num1">Number 1:</label>
+    <input type="number" id="num1" name="num1"><br>
+
+    <label for="num2">Number 2:</label>
+    <input type="number" id="num2" name="num2"><br>
+
+    <label for="num3">Number 3:</label>
+    <input type="number" id="num3" name="num3"><br>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+     const form = document.getElementById("insertForm");
+      form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const ucity = document.getElementById("ucity").value;
+      const num1 = document.getElementById("num1").value;
+      const num2 = document.getElementById("num2").value;
+      const num3 = document.getElementById("num3").value;
+      const data = { ucity, num1, num2, num3};
+        
+        fetch("/pages/form", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => {
+          if (response.ok) {
+            alert("Stats inserted successfully");
+            form.reset(); // reset the form
+          } else {
+            alert("Error inserting stats");
+          }
+        })
+        .catch(error => console.error(error));
+      });
+  </script>
+</body>
+</html>

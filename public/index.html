@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Insert User Information</title>
+  </head>
+  <body>
+    <h1>Insert User Information</h1>
+    <form id="insertForm">
+      <label for="fname">First Name:</label>
+      <input type="text" id="fname" name="fname" required><br><br>
+      <label for="lname">Last Name:</label>
+      <input type="text" id="lname" name="lname" required><br><br>
+      <label for="dbirth">Date of Birth:</label>
+      <input type="date" id="dbirth" name="dbirth" required><br><br>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required><br><br>
+      <label for="pass">Password:</label>
+      <input type="password" id="pass" name="password" required><br><br>
+      <label for="prev">Privilege Level:</label>
+      <input type="text" id="prev" name="prev" required><br><br>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required><br><br>
+      <label for="phnum">Phone Number:</label>
+      <input type="tel" id="phnum" name="phnum" required><br><br>
+      <input type="submit" value="Submit">
+    </form>
+    
+    <script>
+      const form = document.getElementById("insertForm");
+      form.addEventListener("submit", function(event) {
+        event.preventDefault(); // prevent default form submit action
+        const fname = document.getElementById("fname").value;
+        const lname = document.getElementById("lname").value;
+        const dbirth = document.getElementById("dbirth").value;
+        const username = document.getElementById("username").value;
+        const pass = document.getElementById("pass").value;
+        const prev = document.getElementById("prev").value;
+        const email = document.getElementById("email").value;
+        const phnum = document.getElementById("phnum").value;
+        const data = { fname, lname, dbirth, username, pass, prev, email, phnum };
+        
+        fetch("/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => {
+          if (response.ok) {
+            alert("User information inserted successfully!");
+            form.reset(); // reset the form
+          } else {
+            alert("Failed to insert user information. Please try again.");
+          }
+        })
+        .catch(error => console.error(error));
+      });
+    </script>
+  </body>
+</html>

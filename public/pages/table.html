@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Stats Information</title>
+</head>
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>City</th>
+        <th>Number 1</th>
+        <th>Number 2</th>
+        <th>Number 3</th>
+      </tr>
+    </thead>
+    <tbody id="statsTableBody"></tbody>
+  </table>
+
+  <script>
+    fetch('/getStats')
+      .then(response => response.json())
+      .then(data => {
+        const statsTableBody = document.getElementById('statsTableBody');
+        data.forEach(stats => {
+          const row = document.createElement('tr');
+          const idCell = document.createElement('td');
+          idCell.textContent = stats.id;
+          const cityCell = document.createElement('td');
+          cityCell.textContent = stats.ucity;
+          const num1Cell = document.createElement('td');
+          num1Cell.textContent = stats.num1;
+          const num2Cell = document.createElement('td');
+          num2Cell.textContent = stats.num2;
+          const num3Cell = document.createElement('td');
+          num3Cell.textContent = stats.num3;
+          row.appendChild(idCell);
+          row.appendChild(cityCell);
+          row.appendChild(num1Cell);
+          row.appendChild(num2Cell);
+          row.appendChild(num3Cell);
+          statsTableBody.appendChild(row);
+        });
+      })
+      .catch(error => console.error(error));
+  </script>
+</body>
+</html>
